@@ -1,15 +1,31 @@
 {
-  "main.css": "static/css/main.57ce9abe.css",
-  "main.css.map": "static/css/main.57ce9abe.css.map",
-  "main.js": "static/js/main.ab2b5bab.js",
-  "main.js.map": "static/js/main.ab2b5bab.js.map",
-  "static/media/bluewing_logo.png": "static/media/bluewing_logo.e6a20569.png",
-  "static/media/cloud_logo.png": "static/media/cloud_logo.c27638b3.png",
-  "static/media/goldwave_logo.png": "static/media/goldwave_logo.cd921596.png",
-  "static/media/hex_logo.png": "static/media/hex_logo.d4a1557a.png",
-  "static/media/pizza_logo.png": "static/media/pizza_logo.e2e36eb8.png",
-  "static/media/spiral_logo.png": "static/media/spiral_logo.a55bc90b.png",
-  "static/media/sun_logo.png": "static/media/sun_logo.b1bb9502.png",
-  "static/media/w_logo.png": "static/media/w_logo.ef52c4ac.png",
-  "static/media/x_logo.png": "static/media/x_logo.951227fe.png"
+  "files": {
+    "main.css": "/static/css/main.29eee9c5.chunk.css",
+    "main.js": "/static/js/main.44eaeb23.chunk.js",
+    "main.js.map": "/static/js/main.44eaeb23.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.4843c594.js",
+    "runtime-main.js.map": "/static/js/runtime-main.4843c594.js.map",
+    "static/css/2.c9f37a17.chunk.css": "/static/css/2.c9f37a17.chunk.css",
+    "static/js/2.e3596b2c.chunk.js": "/static/js/2.e3596b2c.chunk.js",
+    "static/js/2.e3596b2c.chunk.js.map": "/static/js/2.e3596b2c.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.c9f37a17.chunk.css.map": "/static/css/2.c9f37a17.chunk.css.map",
+    "static/css/main.29eee9c5.chunk.css.map": "/static/css/main.29eee9c5.chunk.css.map",
+    "static/js/2.e3596b2c.chunk.js.LICENSE.txt": "/static/js/2.e3596b2c.chunk.js.LICENSE.txt",
+    "static/media/bluewing_logo.png": "/static/media/bluewing_logo.7bc99cd6.png",
+    "static/media/cloud_logo.png": "/static/media/cloud_logo.3e795fe9.png",
+    "static/media/goldwave_logo.png": "/static/media/goldwave_logo.b260de40.png",
+    "static/media/hex_logo.png": "/static/media/hex_logo.ec9f114f.png",
+    "static/media/spiral_logo.png": "/static/media/spiral_logo.a4cbcc10.png",
+    "static/media/sun_logo.png": "/static/media/sun_logo.7b291143.png",
+    "static/media/w_logo.png": "/static/media/w_logo.0a5a7c88.png",
+    "static/media/x_logo.png": "/static/media/x_logo.aefb8c15.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4843c594.js",
+    "static/css/2.c9f37a17.chunk.css",
+    "static/js/2.e3596b2c.chunk.js",
+    "static/css/main.29eee9c5.chunk.css",
+    "static/js/main.44eaeb23.chunk.js"
+  ]
 }
