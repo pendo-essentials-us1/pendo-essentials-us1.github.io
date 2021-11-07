@@ -16,9 +16,9 @@ const MenuItemGroup = Menu.ItemGroup;
 const Navigation = ({ onNavClick }) => (
   <div className="nav-bar">
     <div className="logo">
-      <img src={'./images/pizza-logo.svg'} alt="logo" id="cloud-logo" />
+      <img src={'./images/pizza-logo.png'} alt="logo" id="cloud-logo" />
       <span className="logo-text">
-        <strong>acme</strong>CRM
+        <strong>pizza</strong>CRM
       </span>
     </div>
     <Menu
