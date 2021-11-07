@@ -1,0 +1,23 @@
+@import '../../variables.module';
+
+#demoLaunch > label {
+  color: $text-color;
+}
+
+#mobileDemo {
+  display: flex;
+  justify-content: center;
+}
+
+#visitorField {
+  width: 250px;
+  margin-left: 10px;
+}
+
+.mobile-btn {
+  margin-left: 10px;
+}
+
+// #phoneContainer {
+//   width: 100%;
+// }

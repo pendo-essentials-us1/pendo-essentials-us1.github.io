@@ -1,0 +1,46 @@
+@import '../../variables.module';
+
+// Body container (everything outside left nav)
+.body-container {
+  width: calc(100% - 240px);
+  height: 100%;
+  margin-left: 240px;
+  position: fixed;
+}
+
+// App content below add new button
+.app-container {
+  width: calc(100% - 240px - 30px);
+  height: calc(100vh - 30px);
+  margin: 15px;
+  position: fixed;
+  overflow-y: scroll;
+}
+
+// Contents of app container
+// .main-content {
+//   height: 100%;
+// }
+
+// Footer
+.pendo-sales-engineering-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 5px;
+  text-align: center;
+  color: $text-color;
+}
+
+.pendo-sales-engineering-footer span {
+  cursor: pointer;
+}
+
+// Table heights
+.whole-page-table {
+  height: 60%;
+}
+
+.card-table {
+  height: 80%;
+}

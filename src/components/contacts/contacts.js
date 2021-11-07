@@ -1,48 +1,77 @@
 import React from 'react';
-import { Table} from 'antd';
-import 'antd/dist/antd.css';
-import { Link } from 'react-router-dom';
-
-
-
-
+import PropTypes from 'prop-types';
+import { Table } from 'antd';
+import DelayLink from 'react-delay-link';
 
 // See https://ant.design/components/table/
-const columns = [{
-  title: 'Name',
-  dataIndex: 'name',
-  key: 'name',
-  width: 150,
-  render: (text,record) => <Link to={"/contacts/" + record._id +"/details"}><span>{text}</span></Link>,
-}, {
-  title: 'Account',
-  dataIndex: 'account',
-  key: 'account',
-  width: 150,
-}, {
-  title: 'Email',
-  dataIndex: 'email',
-  key: 'email',
-  width: 150,
-}, {
-  title: 'Phone',
-  dataIndex: 'phone',
-  key: 'phone',
-  width: 150,
-}, {
-  title: 'Title',
-  dataIndex: 'title',
-  key: 'title',
-  width: 150,
-}];
+
+const ContactLinkComponent = (text, record) => (
+  <a>
+    <DelayLink
+      delay={500}
+      to={'/contacts/' + record._id + '/details'}
+      replace={false}
+    >
+      <span>{text}</span>
+    </DelayLink>
+  </a>
+);
+
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    width: 150,
+    render: ContactLinkComponent,
+  },
+  {
+    title: 'Account',
+    dataIndex: 'account',
+    key: 'account',
+    width: 150,
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+    width: 150,
+  },
+  {
+    title: 'Phone',
+    dataIndex: 'phone',
+    key: 'phone',
+    width: 150,
+  },
+  {
+    title: 'Title',
+    dataIndex: 'title',
+    key: 'title',
+    width: 150,
+  },
+];
 
 export default class Contacts extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.onContactsRequest();
   }
   render() {
     return (
-      <Table columns={columns} dataSource={this.props.contactList} loading={this.props.loading} style={{margin: "0px 15px"}} scroll={{y: 450}}/>
+      <Table
+        columns={columns}
+        dataSource={this.props.contactList}
+        loading={this.props.loading}
+        style={{ margin: '0px 15px' }}
+        size="middle"
+        scroll={{ y: 450 }}
+        className="whole-page-table"
+      />
     );
   }
 }
+
+Contacts.propTypes = {
+  onContactsRequest: PropTypes.func,
+  contactList: PropTypes.object,
+  loading: PropTypes.bool,
+};

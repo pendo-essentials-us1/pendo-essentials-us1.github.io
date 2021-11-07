@@ -1,83 +1,73 @@
 import React from 'react';
-import './nav.css';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
+
+import './nav.scss';
+
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
-
 
 // Navigation bar
 // Only of note is onNavClick is to update the page title as people click on it. That's all
 
-const Navigation = ({onNavClick}) => (
-	<div className="nav-bar">
-		<a href="https://fortynachos.github.io/ps-sandbox">
-			<div className="logo">
-				<h3>
-					PizzaCRM
-				</h3>
-				<img src={require("./pizza_logo.png")} alt="logo" id="pizza-logo"/>
-			</div>
-		</a>
-		<Menu
-			theme='dark'
-			id="main-menu"
-		>
-			<Menu.Item key="1">
-				<Link to='/dashboard' onClick={() => onNavClick('Dashboard')}>
-					<Icon type="home" />
-					<span>Dashboard</span>
-				</Link>
-			</Menu.Item>
-			<Menu.Item key="2">
-				<Link to='/accounts' onClick={() => onNavClick('Accounts')}>
-					<Icon type="team" />
-					<span>Accounts</span>
-				</Link>
-			</Menu.Item>
-			<Menu.Item key="3">
-				<Link to='/contacts' onClick={() => onNavClick('Contacts')}>
-					<Icon type="contacts" />
-					<span>Contacts</span>
-				</Link>
-			</Menu.Item>
-			<Menu.Item key="4">
-				<Link to='/opportunities' onClick={() => onNavClick('Opportunities')}>
-					<Icon type="folder-open" />
-					<span>Opportunities</span>
-				</Link>
-			</Menu.Item>
-			<Menu.Item key="5">
-			</Menu.Item>
-		</Menu>
-		<Menu
-			theme="dark"
-            className="settings-menu"
-            subMenuCloseDelay="1"
-			style={{
-				"bottom": "10px",
-				"position": "absolute",
-				width: 220
-			}}
-			>
-			<SubMenu key="sub1" title={<span><Icon type="setting" /><span>Settings</span></span>}>
-				<MenuItemGroup>
-					<Menu.Item key="5">
-						<Icon type="user" />
-						<span>Profile</span>
-					</Menu.Item>
-					<Menu.Item key="6">
-						<Icon type="team" />
-						<span>Manage Users</span>
-					</Menu.Item>
-					<Menu.Item key="9">
-						<Icon type="customer-service" />
-						<span>Contact Support</span>
-					</Menu.Item>
-				</MenuItemGroup>
-			</SubMenu>
-		</Menu>
-	</div>
+// TODO: #cloud-logo -> #acme-crm-logo, update guide
+
+const Navigation = ({ onNavClick }) => (
+  <div className="nav-bar">
+    <div className="logo">
+      <img src={'./images/acme-crm-logo.svg'} alt="logo" id="cloud-logo" />
+      <span className="logo-text">
+        <strong>acme</strong>CRM
+      </span>
+    </div>
+    <Menu
+      theme="light"
+      id="main-menu"
+      defaultSelectedKeys={[window.location.pathname]}
+    >
+      <Menu.Item key="/">
+        <Link to="/" onClick={() => onNavClick('Dashboard')}>
+          <Icon type="home" />
+          <span className="nav-text">Dashboard</span>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="/accounts">
+        <Link to="/accounts" onClick={() => onNavClick('Accounts')}>
+          <Icon className="nav-icon" type="team" />
+          <span className="nav-text">Accounts</span>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="/contacts">
+        <Link to="/contacts" onClick={() => onNavClick('Contacts')}>
+          <Icon className="nav-icon" type="contacts" />
+          <span className="nav-text">Contacts</span>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="/opportunities">
+        <Link to="/opportunities" onClick={() => onNavClick('Opportunities')}>
+          <Icon className="nav-icon" type="folder-open" />
+          <span className="nav-text">Opportunities</span>
+        </Link>
+      </Menu.Item>
+      <Menu.Item
+        key="/mobile"
+        style={{
+          bottom: '10px',
+          position: 'absolute',
+        }}
+      >
+        <Link to="/mobile" onClick={() => onNavClick('Mobile')}>
+          <Icon type="mobile" />
+          <span className="nav-text">Mobile Demo</span>
+        </Link>
+      </Menu.Item>
+    </Menu>
+  </div>
 );
 
 export default Navigation;
+
+Navigation.propTypes = {
+  onNavClick: PropTypes.func,
+};

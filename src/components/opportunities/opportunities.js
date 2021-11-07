@@ -1,45 +1,71 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Table } from 'antd';
-import { Link } from 'react-router-dom';
-import 'antd/dist/antd.css';
-
+import DelayLink from 'react-delay-link';
 
 // See https://ant.design/components/table/
 
+const OpportunityLinkComponent = (text, record) => (
+  <a>
+    <DelayLink
+      delay={500}
+      to={'/opportunities/' + record._id + '/details'}
+      replace={false}
+    >
+      <span>{text}</span>
+    </DelayLink>
+  </a>
+);
 
-const columns = [{
-  title: 'Name',
-  dataIndex: 'name',
-  key: 'name',
-  width: 250,
-  render: (text,record) => <Link to={"/opportunities/" + record._id +"/details"}><span>{text}</span></Link>
-}, {
-  title: 'Account',
-  dataIndex: 'account',
-  key: 'account',
-  width: 150,
-}, {
-  title: 'Contact',
-  dataIndex: 'contact',
-  key: 'contact',
-  width: 150,
-}, {
-  title: 'Rep',
-  dataIndex: 'rep',
-  key: 'rep',
-  width: 150,
-}];
-
-
-
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    width: 250,
+    render: OpportunityLinkComponent,
+  },
+  {
+    title: 'Account',
+    dataIndex: 'account',
+    key: 'account',
+    width: 150,
+  },
+  {
+    title: 'Contact',
+    dataIndex: 'contact',
+    key: 'contact',
+    width: 150,
+  },
+  {
+    title: 'Rep',
+    dataIndex: 'rep',
+    key: 'rep',
+    width: 150,
+  },
+];
 
 export default class Opportunities extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.onOpportunitiesLoad();
   }
   render() {
     return (
-      <Table columns={columns} dataSource={this.props.opportunitiesList} loading={this.props.loading} style={{margin: "0px 15px"}} scroll={{y:450}}/>
-    )
+      <Table
+        columns={columns}
+        dataSource={this.props.opportunitiesList}
+        loading={this.props.loading}
+        style={{ margin: '0px 15px' }}
+        size="middle"
+        scroll={{ y: 450 }}
+        className="whole-page-table"
+      />
+    );
   }
 }
+
+Opportunities.propTypes = {
+  onOpportunitiesLoad: PropTypes.func,
+  opportunitiesList: PropTypes.array,
+  loading: PropTypes.bool,
+};
