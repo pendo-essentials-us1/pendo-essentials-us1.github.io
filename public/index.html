@@ -1,295 +1,524 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
-    <!--
-    manifest.json provides metadata used when your web app is added to the
-    homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
--->
-<link rel="manifest" href="%PUBLIC_URL%/ps-sandbox/manifest.json">
-<link rel="shortcut icon" href="%PUBLIC_URL%/ps-sandbox/favicon.ico">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Public+Sans&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;400&display=swap');
-</style>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta name="robots" content="noindex" />
 
-<!--  Coveo In-Product Experience -->
-<script type="text/javascript" src="https://platform.cloud.coveo.com/rest/organizations/paloaltonetworksintranetsandbox2/pages/05155117-46ee-4aa6-96f7-169c216403f1/inappwidget/loader" async ></script>
-<!-- End Coveo In-Product Experience -->
-<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-<script type="text/javascript">
-var accounts = [
-    "Stark Industries",
-    "Wayne Enterprises",
-    "Hooli",
-    "Dunder Mifflin US",
-    "Willy Wonka Industrial",
-    "Pied Piper",
-    "Dunder Mifflin EU",
-    "Associated Strategies",
-    "Krusty Krab",
-    "Sterling Cooper"
-];
+    <link rel="manifest" href="%PUBLIC_URL%/ps-sandbox/manifest.json" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/ps-sandbox/favicon.ico" />
 
-let month = new Date().getMonth()
-let weight;
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
-if (month % 2) {
-    weight = [ 300, 175, 125, 100, 75, 75, 50, 50, 25, 25 ];
-} else {
-    weight = [ 300, 25, 50, 50, 75, 75, 100, 125, 175, 25 ];
-}
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
+    ></script>
+    <script>
+      // Get URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const disablePendo = urlParams.get('disablePendo') === 'true';
+      const urlVisitor = urlParams.get('visitor');
+      const urlAccount = urlParams.get('account');
+      const urlRole = urlParams.get('role');
 
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
+      // List of names for date based visitors
+      const visitors = [
+        'Michael',
+        'Christopher',
+        'Jessica',
+        'Matthew',
+        'Ashley',
+        'Jennifer',
+        'Joshua',
+        'Amanda',
+        'Daniel',
+        'David',
+        'James',
+        'Robert',
+        'John',
+        'Joseph',
+        'Andrew',
+        'Ryan',
+        'Sarah',
+        'Stephanie',
+        'Rachel',
+        'Erika',
+        'Thomas',
+        'Sonya',
+        'Bill',
+        'Tyrone',
+        'Denise',
+        'Brian',
+        'Adam',
+        'Megan',
+        'Eric',
+        'Elizabeth',
+        'Anthony',
+        'Nicole',
+        'Kevin',
+        'Melissa',
+        'Kevin',
+        'Laura',
+        'Kyle',
+        'Kayla',
+        'Amber',
+        'Richard',
+        'Kim',
+        'Jeff',
+        'Amy',
+        'Michelle',
+        'Benjamin',
+        'Mark',
+        'Emily',
+        'Aaron',
+        'Charles',
+        'Rebecca',
+        'Jamie',
+        'Erin',
+        'Zachary',
+        'Sean',
+        'Mary',
+        'Kelly',
+        'Paul',
+        'Dustin',
+        'Travis',
+        'Gregory',
+        'Andrea',
+        'Angela',
+        'Bryan',
+        'Shane',
+        'Todd',
+        'George',
+        'Phillip',
+        'Stacy',
+        'Joanna',
+        'Jasmine',
+        'Brooke',
+        'Felicity',
+        'Tony',
+        'Nancy',
+        'Kate',
+        'Jillian',
+        'Jerry',
+        'Luke',
+        'Maria',
+        'Cody',
+        'Allison',
+        'Peter',
+        'Jordan',
+        'Natalie',
+        'Holly',
+        'Jared',
+        'Anna',
+        'Caroline',
+        'Amalia',
+        'Donald',
+        'Micah',
+        'Marvin',
+        'Levi',
+        'Brad',
+        'Taryn',
+        'Toni',
+        'Jessie',
+        'Ronnie',
+        'Ruth',
+        'Adriana',
+        'Darryl',
+        'Mayra',
+        'Ralph',
+        'Elena',
+        'Anita',
+        'Jane',
+        'Simon',
+        'Eli',
+        'Quentin',
+        'Collin',
+        'Dallas',
+        'Lamar',
+        'Lebron',
+        'Francisco',
+        'DwayneTheRock',
+        'Rudy',
+        'Rosemary',
+        'Marlin',
+        'Dory',
+        'Glen',
+        'Dipper',
+      ];
 
-    var cleanName = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + cleanName + '(=([^&#]*)|&|#|$)');
-    var results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
+      // List of possible roles
+      const roles = ['user', 'admin', 'read-only'];
 
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+      // List of accounts for date based visitors
+      const accounts = [
+        'Soylent Corp',
+        'Wonka Industries',
+        'Dharma Initiative',
+        'Waynes World',
+        'Parker Industries',
+        'Oceanic',
+        'Rearden Steal',
+        'InGen',
+        'Oscorp',
+        'Purrada',
+        'Rent A Swag',
+        'Space Y',
+        'Pixel Arts',
+        'Vinepoly',
+        'Cloudworks',
+        'Chief Aviation',
+        'Sphere Co',
+        'Altair Corp',
+        'Vega Corp',
+        'Deneb Corp',
+        'Shade Arts',
+        'Lion Security',
+        'Jupiter Brews',
+        'Jetlife',
+        'Herolutions',
+        'Sphinx Solutions',
+        'WhiteBox Inc',
+        'Rosefly',
+        'Dinoco',
+        'Silver Shamrock',
+        'Bushwood',
+        'HAL Labs',
+        'Mugatu Industries',
+        'Pizza Planet',
+        'Rex Kwan Do',
+        'Macmillan',
+        'Empire Industries',
+      ];
 
-let accountParam = getParameterByName('accountId');
-let visitorParam = getParameterByName('visitorId');
+      // List of accounts for static visitors
+      const oldAccounts = [
+        'Stark Industries',
+        'Wayne Enterprises',
+        'Hooli',
+        'Dunder Mifflin US',
+        'Pied Piper',
+        'Dunder Mifflin EU',
+        'Associated Strategies',
+        'Sterling Cooper',
+        'Ewing Oil',
+        'Prestige Worldwide',
+        'TelAmeriCorp',
+        'TakeOff',
+        'Burnham and Root',
+        'Outer Inc',
+        'One World',
+        'Cadence',
+        'WorryFree Inc',
+        'BlueLine',
+        'Raptor Inc',
+        'Arrowhead',
+        'Moonlight Inc',
+        'BlueRibbon',
+        'LightSpeed',
+        'Imaginary Inc',
+        'Pluto Corp',
+        'Hyperion',
+        'BlackBox Inc',
+        'Eco Focus',
+        'Innovation Arch',
+        'Strat Security',
+        'Inspire Fitness Co',
+        'Candor Corp',
+        'Cogent Data',
+        'Epic Adventure Inc',
+        'Sanguine Skincare',
+        'Vortex Solar',
+        'Admire Arts',
+      ];
 
-function pickUsingWeights(items, weights) {
-    var total = 0;
-    var ranges = weights.slice(0);
+      // Visitor variables to assign
+      let visitor;
+      let role;
+      let accString;
+      let account_id;
 
-    for(var i = 0, len = weights.length; i < len; i++) {
-        ranges[i] = [total, total += ranges[i]];
-    }
-    var randomNumber = parseInt(Math.random() * total);
-    for(;randomNumber < ranges[--i][0];);
-    return items[i];
-}
-
-var account_id = pickUsingWeights(accounts, weight);
-
-let accString = account_id.replace(/\s/g, '');
-let randNum = Math.random() * 100;
-let visitor;
-let role;
-
-if (randNum < 25) {
-    visitor = 'visitor1@' + accString + '.com';
-    role = 'admin';
-} else if (randNum <= 50) {
-    visitor = 'visitor6@' + accString + '.com';
-    role = 'admin';
-} else if (randNum <= 65) {
-    visitor = 'visitor4@' + accString + '.com';
-    role = 'user';
-} else if (randNum <= 80) {
-    visitor = 'visitor7@' + accString + '.com';
-    role = 'user';
-} else if (randNum <= 90) {
-    visitor = 'visitor5@' + accString + '.com';
-    role = 'user';
-} else if (randNum <= 95) {
-    visitor = 'visitor3@' + accString + '.com';
-    role = 'read-only';
-} else {
-    visitor = 'visitor2@' + accString + '.com';
-    role = 'read-only';
-}
-
-</script>
-
-<!-- PENDO SNIPPET GOES HERE!  -->
-<script>
-(function(apiKey){
-    (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=[];
-    v=['initialize','identify','updateOptions','pageLoad'];for(w=0,x=v.length;w<x;++w)(function(m){
-        o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
-        y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
-        z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
-})('ecb0e9b8-105a-45ed-704c-6993b9813824');
-</script>
-
-<script>
-    // Note: This utilizes a MutationObserver and will
-    // not work in IE6-10.  
-    pendo.initialize({
-        visitor: {
-          id:       visitorParam || visitor || 'VISITOR-UNIQUE-ID',
-          role:     role || 'user'
-        },
-     
-        account: {
-          id:       accountParam || account_id
-        },
-
-        events: {
-          ready: function () {
-          //pendo.addBodyMutationListener();
-        }
+      // Roll 3 sided dice. If > 2, use old visitor ID generation. Else, use new visitor ID generation.
+      const randomRoll = getRandomArbitrary(0, 3);
+      if (randomRoll > 2) {
+        account_id = oldAccounts[Math.floor(Math.random() * accounts.length)];
+        accString = account_id.replace(/\s/g, '');
+        getVisitorId(accString);
+      } else {
+        getDateBasedVisitorId();
       }
-    });
 
-    var rcHtml = `
-    <div id="citrix-rc_resource-center-container" class="citrix-rc_slide-right citrix-rc_pendo-invisible">
-      <!-- RC HEADER -->
-      <div class="citrix-rc_rc-header">
-        <div class="citrix-rc_rc-title">
-          Resource Center
-        </div>
-        <div class="citrix-rc_rc-nav">
-          <div class="citrix-rc_rc-nav-item" title="What's New">
-            What's New
-          </div>
-          <div class="citrix-rc_rc-nav-item" title="Get Started">
-            Get Started
-          </div>
-          <div id="citrix-rc_mag-icon-container" class="citrix-rc_rc-nav-item" title="Search Articles">
-            Search Articles
-          </div>
-          <div class="citrix-rc_rc-nav-item" title="Give Feedback">
-            Give Feedback
-          </div>
-        </div>
-          
-        <div id="citrix-rc_rc-close-button">×</div>
-      </div>
-        
-      <!-- RC HOME VIEW / Get Started --> 
-      <div class="citrix-rc_rc-home-view citrix-rc_pendo-visible">
-        <div id="citrix-rc_rc-content-pane"></div>
-      </div>
-            
-      <!-- Whats New Divider -->
-      <div class="citrix-rc_rc-whats-new-divider citrix-rc_pendo-invisible"></div>
-    </div>
-    `
+      // Get date based visitor ID (new accounts)
+      function getDateBasedVisitorId(date) {
+        const randNumOne = getRandomArbitrary(0, 3);
+        const randNumTwo = getRandomArbitrary(0, 2);
 
-    var foregroundHtml = '<div id="citrix-rc_foreground" class="citrix-rc_pendo-invisible"></div>';
+        // Create New Date, date will be used in the case of testing, otherwise, today will = today.
+        const today = date || new Date();
 
-    pendo.addBodyMutationListener = function() {
-      var rcWrapper = document.createElement("div");
-      var foregroundNode = document.createElement("div");
-      rcWrapper.innerHTML = rcHtml;
-      foregroundNode.innerHTML = foregroundHtml;
+        // Get the day of the week as a number [0 - 6 = Sun - Sat]
+        const dayOfWeek = today.getDay();
 
-      var target = document.querySelector('body');
-      target.appendChild(rcWrapper.firstElementChild);
-      target.appendChild(foregroundNode.firstElementChild);
+        // Initialize visitorName
+        let visitorName = '';
 
-      // create an observer instance
-      var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.addedNodes.length) {
-            if (mutation.addedNodes[0].className.includes("_pendo-resource-center-global-container")) {
-              document.getElementById("citrix-rc_foreground").classList.remove("citrix-rc_pendo-invisible");
-              document.getElementById("citrix-rc_resource-center-container").classList.remove("citrix-rc_pendo-invisible"); 
-              pendo.dom("#citrix-rc_resource-center-container")[0].classList.remove("citrix-rc_slide-right"); 
+        // Based on day of week, assign visitor the appropriate name + date.
+        switch (dayOfWeek) {
+          // Monday - Today the goal is to obtain 100 new visitors with today's date. These are weekly unique visitor IDs. Choose 1 random visitor, assign the visitor ID as the name + today's date.
+          case 1:
+            visitorName = visitors[Math.floor(Math.random() * visitors.length)];
+            visitor = `${visitorName}${calcPrevDate(0)}@`; // today
+            break;
 
-              document.getElementById("citrix-rc_rc-close-button").addEventListener('click', function(){
-                document.getElementById("citrix-rc_resource-center-container").classList.add("citrix-rc_slide-right");
-                document.getElementById("citrix-rc_foreground").classList.add("citrix-rc_pendo-invisible");
-                setTimeout(function() {
-                    pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter();
-                    document.getElementById("citrix-rc_resource-center-container").classList.add("citrix-rc_pendo-invisible");
-                }, 400);      
-              });
-
-              if(!pendo.citrixRcTabListeners){
-                // Adds active class to clicked tabs.  Flushes other active tabs.
-                Array.from(document.getElementsByClassName('citrix-rc_rc-nav-item')).forEach((item) => {
-                  item.addEventListener('click', function(){
-                    Array.from(document.getElementsByClassName('citrix-rc_rc-nav-item')).forEach((tab) => {
-                      tab.classList.remove("citrix-rc_active-nav-item");
-                    });
-                    item.classList.add("citrix-rc_active-nav-item");
-                    setNewContent(item);
-                  });
-                });
-
-                // Quick function to show tab functionality
-                function setNewContent(item) {
-                  if(item.title == "What's New") {
-                    pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter()
-                    pendo.showGuideById("Vxsb_jorPJxiuk3NUAae8BfdLdA@lwURzOFm0XqN2yteorAJsqn-kW4");
-                  }
-                  if(item.title == "Get Started") {
-                    pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter()
-                    pendo.showGuideById("SxPLqZUwM9pTLCUezILHfGuqnY0");
-                  }
-                  if(item.title == "Search Articles") {
-                    pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter()
-                    pendo.showGuideById("Witc4AgAF3SxcsdxTaB8fDyyL-0@lwURzOFm0XqN2yteorAJsqn-kW4");
-                  }
-                  if(item.title == "Give Feedback") {
-                    pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter()
-                    pendo.showGuideById("GoogwRVs2to8GGxf7wNov8d5dJE");
-                  }
-                }
-
-                pendo.citrixRcTabListeners = true;
-              }
-
-              var rcContainer = mutation.addedNodes[0];
-              var citrixPane = pendo.dom("#citrix-rc_rc-content-pane")[0];
-              citrixPane.appendChild(rcContainer);
-
-              if(!pendo.BuildingBlocks.BuildingBlockResourceCenter.findShownResourceCenterModule()) {
-                Array.from(document.getElementsByClassName('citrix-rc_rc-nav-item')).forEach((tab) => {
-                  tab.classList.remove("citrix-rc_active-nav-item");
-                });
-                pendo.showGuideById("Vxsb_jorPJxiuk3NUAae8BfdLdA@lwURzOFm0XqN2yteorAJsqn-kW4");
-                pendo.dom('.citrix-rc_rc-nav-item[title="What\'s New"')[0].classList.add("citrix-rc_active-nav-item");
-              }
+          // Tuesday - Repeat ~40% of visitors from one week ago OR One Month Ago
+          case 2:
+            if (randNumOne < 2) {
+              // Week Case
+              visitorName =
+                visitors[
+                  Math.floor(Math.random() * getRandomArbitrary(31, 38))
+                ];
+              visitor = `${visitorName}${calcPrevDate(8)}@`; // 1 * 7 + 1 = 8
+            } // Month Case
+            else {
+              visitorName = visitors[Math.floor(getRandomArbitrary(94, 100))];
+              visitor = `${visitorName}${calcPrevDate(29)}@`; // 1 * 7 * 4 + 1 = 29
             }
-          }
-        })
-      })
+            break;
 
-      var config = {
-        attributeFilter: ['data-layout'],
-        attributes: true,
-        childList: true,
-        characterData: true,
-        subtree: false
+          // Wednesday - Repeat ~35% of visitors from two weeks ago OR Two Months Ago
+          case 3:
+            if (randNumTwo < 1) {
+              // Week Case
+              visitorName =
+                visitors[
+                  Math.floor(Math.random() * getRandomArbitrary(27, 35))
+                ];
+              visitor = `${visitorName}${calcPrevDate(16)}@`; // 2 * 7 + 2 = 16
+            } // Month Casse
+            else {
+              visitorName = visitors[Math.floor(getRandomArbitrary(77, 100))];
+              visitor = `${visitorName}${calcPrevDate(58)}@`; // 2 * 7 * 4 + 2 = 58
+            }
+            break;
+
+          // Thursday - Repeat ~30% of visitors from three weeks ago or Three Weeks Ago
+          case 4:
+            if (randNumTwo < 1) {
+              // Week Case
+              visitorName =
+                visitors[
+                  Math.floor(Math.random() * getRandomArbitrary(23, 28))
+                ];
+              visitor = `${visitorName}${calcPrevDate(24)}@`; // 3 * 7 + 3 = 24
+            } // Month Case
+            else {
+              visitorName = visitors[Math.floor(getRandomArbitrary(70, 100))];
+              visitor = `${visitorName}${calcPrevDate(87)}@`; // 3 * 7 * 4 + 3 = 87
+            }
+            break;
+
+          // Friday - Repeat ~26% of visitors from four weeks ago or Four Weeks Ago
+          case 5:
+            if (randNumTwo < 1) {
+              // Week Case
+              visitorName =
+                visitors[
+                  Math.floor(Math.random() * getRandomArbitrary(20, 25))
+                ];
+              visitor = `${visitorName}${calcPrevDate(32)}@`; // 4 * 7 + 4 = 32
+            } // Month Case
+            else {
+              visitorName = visitors[Math.floor(getRandomArbitrary(73, 100))];
+              visitor = `${visitorName}${calcPrevDate(116)}@`; // 4 * 7 * 4 + 4 = 116
+            }
+            break;
+
+          // Saturday - Repeat ~21% of visitors from five weeks ago or Five Months Ago
+          case 6:
+            if (randNumTwo < 1) {
+              visitorName =
+                visitors[
+                  Math.floor(Math.random() * getRandomArbitrary(12, 18))
+                ];
+              visitor = `${visitorName}${calcPrevDate(40)}@`; // 5 * 7 + 5 = 40
+            } else {
+              visitorName = visitors[Math.floor(getRandomArbitrary(77, 100))];
+              visitor = `${visitorName}${calcPrevDate(145)}@`; // 5 * 7 * 4 + 5  = 145
+            }
+            break;
+
+          // Sunday - Repeat ~18% of visitors from six weeks ago or Six Months Ago
+          case 0:
+            if (randNumTwo < 1) {
+              visitorName =
+                visitors[Math.floor(Math.random() * getRandomArbitrary(8, 12))];
+              visitor = `${visitorName}${calcPrevDate(48)}@`; // 6 * 7 + 6 = 48
+            } else {
+              visitorName = visitors[Math.floor(getRandomArbitrary(80, 100))];
+              visitor = `${visitorName}${calcPrevDate(174)}@`; // 6 * 7 * 4 + 6 = 174
+            }
+            break;
+
+          default:
+            visitorName =
+              Satvisitors[Math.floor(Math.random() * Satvisitors.length)];
+            visitor = `${visitorName}${dd}@${accString}.com`;
+            role = 'read-only';
+        }
+
+        // Set role based on the visitorName index in 'visitors' modded by 3. Use this result to access an element in the 'role' array. Ensures each visitorName always has the same role.
+        role = roles[visitors.indexOf(visitorName) % roles.length];
+
+        // Set account based on visitor name to guarantee visitorID is the same when it returns
+        account_id = accounts[visitors.indexOf(visitorName) % accounts.length];
+
+        // Create account string w /out spaces to append to visitor name
+        accString = account_id.replace(/\s/g, '');
+
+        // Append accString to visitor id.
+        visitor = `${visitor}${accString}.com`;
+
+        return visitor;
+      }
+
+      // Get old visitor ID (old accounts)
+      function getVisitorId(accString) {
+        const randNum = Math.random() * 100;
+
+        if (randNum < 25) {
+          visitor = `visitor1@${accString}.com`;
+          role = 'admin';
+        } else if (randNum <= 50) {
+          visitor = `visitor6@${accString}.com`;
+          role = 'admin';
+        } else if (randNum <= 65) {
+          visitor = `visitor4@${accString}.com`;
+          role = 'user';
+        } else if (randNum <= 80) {
+          visitor = `visitor7@${accString}.com`;
+          role = 'user';
+        } else if (randNum <= 90) {
+          visitor = `visitor5@${accString}.com`;
+          role = 'user';
+        } else if (randNum <= 95) {
+          visitor = `visitor3@${accString}.com`;
+          role = 'read-only';
+        } else {
+          visitor = `visitor2@${accString}.com`;
+          role = 'read-only';
+        }
+
+        return visitor;
+      }
+
+      // BEGIN ADDITIONAL FUNCTIONS
+      // @Author - Rachel May
+
+      /**
+       * Returns a random number between min (inclusive) and max (exclusive)
+       */
+      function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      /*
+       * Subtracts 'numberOfDays' from todays date.
+       * Returns the new date in MonthDayYear string form.
+       */
+      function calcPrevDate(numberOfDays) {
+        const todaysDate = new Date();
+
+        const prevDate = new Date(
+          todaysDate.getFullYear(),
+          todaysDate.getMonth(),
+          todaysDate.getDate() - numberOfDays
+        );
+        const prevMonth = prevDate.getMonth() + 1;
+        const prevDay = prevDate.getDate();
+        const prevYear = prevDate.getFullYear() - 2000;
+
+        const prevDateDisplay = `${prevMonth < 10 ? '0' : ''}${prevMonth}${
+          prevDay < 10 ? '0' : ''
+        }${prevDay}${prevYear}`;
+
+        calcDate = prevDateDisplay;
+
+        return prevDateDisplay;
+      }
+
+      // Override visitor info with url params if specified
+      account_id = urlAccount || account_id;
+      visitor = `${
+        urlVisitor || visitor.slice(0, visitor.indexOf('@'))
+      }@${account_id.replace(/\s/g, '')}.com`;
+      role = urlRole || role;
+
+      // Store visitor info on global for use in avatar drop down
+      window.userInfo = {
+        account: account_id,
+        visitor: visitor.slice(0, visitor.indexOf('@')), //  ->visitor9<-@account.com
+        visitorId: visitor,
+        role: role,
       };
 
-      observer.observe(target, config);
-    }
-</script>
+      if (!disablePendo) {
+        // Pendo Snippet
+        (function (apiKey) {
+          (function (p, e, n, d, o) {
+            var v, w, x, y, z;
+            o = p[d] = p[d] || {};
+            o._q = [];
+            v = ['initialize', 'identify', 'updateOptions', 'pageLoad'];
+            for (w = 0, x = v.length; w < x; ++w)
+              (function (m) {
+                o[m] =
+                  o[m] ||
+                  function () {
+                    o._q[m === v[0] ? 'unshift' : 'push'](
+                      [m].concat([].slice.call(arguments, 0))
+                    );
+                  };
+              })(v[w]);
+            y = e.createElement(n);
+            y.async = !0;
+            y.src = 'https://cdn.pendo.io/agent/static/' + apiKey + '/pendo.js';
+            z = e.getElementsByTagName(n)[0];
+            z.parentNode.insertBefore(y, z);
+          })(window, document, 'script', 'pendo');
 
-    
+          pendo.initialize({
+            visitor: {
+              id: visitor || 'VISITOR-UNIQUE-ID',
+              role: role || 'user',
+            },
+            account: {
+              id: account_id || 'ACCOUNT-UNIQUE-ID',
+            },
+          });
+        })('ecb0e9b8-105a-45ed-704c-6993b9813824');
 
-<!-- DON'T FORGET PROPER METADATA! -->
-
-<!--
-Notice the use of %PUBLIC_URL% in the tags above.
-It will be replaced with the URL of the `public` folder during the build.
-Only files inside the `public` folder can be referenced from the HTML.
-
-Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-work correctly both with client-side routing and a non-root public URL.
-Learn how to configure a non-root public URL by running `npm run build`.
--->
-<title>Pendo Experience</title>
-</head>
-<body>
-    <noscript>
-        You'll need to enable JavaScript to run this app. 
-    </noscript>
+        // Zendesk widget script
+        const script = document.createElement('script');
+        script.id = 'ze-snippet';
+        script.src =
+          'https://static.zdassets.com/ekr/snippet.js?key=95aa7acb-d169-4ca7-bff8-dcb94bd4b1f1';
+        document.head.appendChild(script);
+      }
+    </script>
+    <title>acmeCRM</title>
+  </head>
+  <body>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <div id="exit-intent"></div>
     <div id="root"></div>
-        
-    <!--
-    This HTML file is a template.
-    If you open it directly in the browser, you will see an empty page.
-
-    You can add webfonts, meta tags, or analytics to this file.
-    The build step will place the bundled scripts into the <body> tag.
-
-    To begin the development, run `npm start` or `yarn start`.
-    To create a production bundle, use `npm run build` or `yarn build`.
--->
-</body>
+  </body>
 </html>
