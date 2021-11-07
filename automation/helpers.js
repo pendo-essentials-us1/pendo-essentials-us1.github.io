@@ -19,31 +19,38 @@ const randomize = function (options, distributions) {
     } else {
         return options[7];
     }
-}
+};
 
 function evenlyDistribute (count) {
     switch (count) {
-        case 2:
-            return [ 75, 100 ];
-            break;
-        case 3:
-            return [ 50, 80, 100 ];
-            break;
-        case 4:
-            return [ 50, 75, 90, 100 ];
-            break;
-        case 5:
-            return [ 40, 65, 85, 95, 100 ];
-            break;
-        case 6:
-            return [ 35, 55, 70, 85, 95, 100 ];
-            break;
-        default:
-            return [ 30, 50, 65, 80, 90, 95, 100 ];
-            break;
+    case 2:
+        return [ 75, 100 ];
+        break;
+    case 3:
+        return [ 50, 80, 100 ];
+        break;
+    case 4:
+        return [ 50, 75, 90, 100 ];
+        break;
+    case 5:
+        return [ 40, 65, 85, 95, 100 ];
+        break;
+    case 6:
+        return [ 35, 55, 70, 85, 95, 100 ];
+        break;
+    default:
+        return [ 30, 50, 65, 80, 90, 95, 100 ];
+        break;
     }
 }
 
+function formatDate (date) {
+    let months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getUTCFullYear()} ${date.toTimeString().replace(/GMT[-|+]\d+\s\((\w\w\w)\)/, '$1')}`;
+}
+
 module.exports = {
-    randomize
+    randomize,
+    formatDate
 };
